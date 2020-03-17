@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Downloader</string>
+    <string name="scan_code">ScanCode</string>
+    <string name="download">DownloadAPK</string>
+    <string name="logo">logo</string>
+    <string name="path_hint">path</string>
+    <string name="check_version">CheckVersion</string>
+    <string name="explain" >
+        1. Normal download\n
+        \t\t\t\tClick the check version button to automatically obtain the version information of goldemperor\n\n
+        1. Scan and download\n
+        \t\t\t\tClick the scan button to scan the QR code of the download link\n\n
+        1. Manually enter the address to download\n
+        \t\t\t\tEnter the download address manually in the download address column\n\n
+        2. Click the download installation package button to start downloading the latest version of apk\n\n
+        3. Click open to install after downloading
+    </string>
+</resources>
