@@ -4,7 +4,7 @@
     <string name="download">DownloadAPK</string>
     <string name="logo">logo</string>
     <string name="path_hint">path</string>
-    <string name="check_version">CheckVersion</string>
+    <string name="check_goldemperor_app_version">Check GoldEmperor App Version</string>
     <string name="explain" >
         1. Normal download\n
         \t\t\t\tClick the check version button to automatically obtain the version information of goldemperor\n\n
@@ -15,4 +15,5 @@
         2. Click the download installation package button to start downloading the latest version of apk\n\n
         3. Click open to install after downloading
     </string>
+    <string name="check_canteen_scan_app_version">Check CanteenScan App version</string>
 </resources>

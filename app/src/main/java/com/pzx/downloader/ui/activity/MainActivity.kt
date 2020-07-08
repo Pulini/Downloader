@@ -13,9 +13,9 @@ import com.pzx.downloader.R
 import com.pzx.downloader.http.API
 import com.pzx.downloader.http.DoHttp
 import com.pzx.downloader.http.Downloader
-import com.pzx.downloader.http.VersionModel
+import com.pzx.downloader.model.CanteenScanVersionModel
+import com.pzx.downloader.model.GoldEmperorVersionModel
 import kotlinx.android.synthetic.main.activity_main.*
-import pub.devrel.easypermissions.EasyPermissions
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,31 +23,31 @@ import java.io.File
 
 
 @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
+class MainActivity : AppCompatActivity(){
 
     var path = "http://geapp.goldemperor.com:8020/AndroidUpdate/GoldEmperor/GoldEmperor.apk"
 
-    companion object {
-        @RequiresApi(Build.VERSION_CODES.M)
-        val PERMS_WRITE = arrayOf(
-            Manifest.permission.INTERNET,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.REQUEST_INSTALL_PACKAGES,
-            Manifest.permission.VIBRATE,
-            Manifest.permission.CAMERA
-        )
-        const val REQUEST_PERMISSIONS_REQUEST_CODE = 1000
-    }
+//    companion object {
+//        @RequiresApi(Build.VERSION_CODES.M)
+//        val PERMS_WRITE = arrayOf(
+//            Manifest.permission.INTERNET,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.READ_EXTERNAL_STORAGE,
+//            Manifest.permission.REQUEST_INSTALL_PACKAGES,
+//            Manifest.permission.VIBRATE,
+//            Manifest.permission.CAMERA
+//        )
+//        const val REQUEST_PERMISSIONS_REQUEST_CODE = 1000
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        requestPermissions()
+//        requestPermissions()
     }
 
     fun checkVersion(v: View) {
-        getVersion()
+        getGoldEmperorVersion()
     }
 
     fun scan(v: View) {
@@ -57,13 +57,18 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         )
     }
 
+    fun getCanteenUrl(v: View) {
+        getCanteenVersion()
+    }
+
     fun download(v: View) {
-      val path=  et_path.text.toString()
-        if(path.isEmpty()){
+        val path = et_path.text.toString()
+        if (path.isEmpty()) {
             ColoredToast.long(applicationContext, "请填写下载地址")
             return
         }
-        bt_download.isEnabled = false
+        bt_CheckCanteenScan.isEnabled = false
+        bt_CheckGoldEmperor.isEnabled = false
         Downloader(
             this,
             path,
@@ -71,7 +76,8 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
                 Downloader.OnDownLoadDialgListener {
                 override fun onSuccess(file: File) {
                     runOnUiThread {
-                        bt_download.isEnabled = true
+                        bt_CheckCanteenScan.isEnabled = true
+                        bt_CheckGoldEmperor.isEnabled = true
                         ColoredToast.long(
                             applicationContext,
                             "下载完成"
@@ -81,7 +87,8 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
 
                 override fun onError(msg: String) {
                     runOnUiThread {
-                        bt_download.isEnabled = true
+                        bt_CheckCanteenScan.isEnabled = true
+                        bt_CheckGoldEmperor.isEnabled = true
                         ColoredToast.long(
                             applicationContext,
                             "下载失败:$msg"
@@ -91,53 +98,70 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
             }).start()
     }
 
-    private fun getVersion() {
-        DoHttp.create(API::class.java).getApkPath().enqueue(object : Callback<VersionModel> {
-            override fun onFailure(call: Call<VersionModel>, t: Throwable) {
+    private fun getCanteenVersion() {
+        DoHttp.create(API::class.java).getCanteenScanApkPath().enqueue(object : Callback<CanteenScanVersionModel> {
+            override fun onFailure(call: Call<CanteenScanVersionModel>, t: Throwable) {
                 Log.e("Pan", "onFailure")
                 path = DoHttp.path
             }
 
-            override fun onResponse(call: Call<VersionModel>, response: Response<VersionModel>) {
+            override fun onResponse(call: Call<CanteenScanVersionModel>, response: Response<CanteenScanVersionModel>) {
                 Log.e("Pan", "Url=${response.body()?.Url}")
                 val vm = response.body()
                 path = vm!!.Url
                 ColoredToast.long(applicationContext, "最新版本:${vm.VersionName}")
-                tv_msg.text="最新版本:${vm.VersionName}\n版本说明:${vm.Description}"
+                tv_msg.text = "最新版本:${vm.VersionName}"
+                et_path.setText(path)
+            }
+        })
+    }
+    private fun getGoldEmperorVersion() {
+        DoHttp.create(API::class.java).getGoldEmperorApkPath().enqueue(object : Callback<GoldEmperorVersionModel> {
+            override fun onFailure(call: Call<GoldEmperorVersionModel>, t: Throwable) {
+                Log.e("Pan", "onFailure")
+                path = DoHttp.path
+            }
+
+            override fun onResponse(call: Call<GoldEmperorVersionModel>, response: Response<GoldEmperorVersionModel>) {
+                Log.e("Pan", "Url=${response.body()?.Url}")
+                val vm = response.body()
+                path = vm!!.Url
+                ColoredToast.long(applicationContext, "最新版本:${vm.VersionName}")
+                tv_msg.text = "最新版本:${vm.VersionName}\n版本说明:${vm.Description}"
                 et_path.setText(path)
             }
         })
     }
 
-    private fun requestPermissions() {
-        if (EasyPermissions.hasPermissions(this, *PERMS_WRITE)) {
-            Log.e("Pan", "有权限")
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                "APP需要网络、本地读写和安装APK的权限",
-                REQUEST_PERMISSIONS_REQUEST_CODE,
-                *PERMS_WRITE
-            )
-        }
-    }
+//    private fun requestPermissions() {
+//        if (EasyPermissions.hasPermissions(this, *PERMS_WRITE)) {
+//            Log.e("Pan", "有权限")
+//        } else {
+//            EasyPermissions.requestPermissions(
+//                this,
+//                "APP需要网络、本地读写和安装APK的权限",
+//                REQUEST_PERMISSIONS_REQUEST_CODE,
+//                *PERMS_WRITE
+//            )
+//        }
+//    }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-    }
-
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        Log.e("Pan", "用户授权成功${perms}")
-    }
-
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        Log.e("Pan", "用户授权失败${perms}")
-    }
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+//    }
+//
+//    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+//        Log.e("Pan", "用户授权成功${perms}")
+//    }
+//
+//    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+//        Log.e("Pan", "用户授权失败${perms}")
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -5,7 +5,7 @@
     <string name="download">下载安装包</string>
     <string name="logo">logo</string>
     <string name="path_hint">下载地址</string>
-    <string name="check_version">检查版本</string>
+    <string name="check_goldemperor_app_version">检查金帝App版本</string>
     <string name="explain" >
         1、普通下载 \n
         \t\t\t\t点击检查版本按钮自动获取GoldEmperor的版本信息\n\n
@@ -16,4 +16,5 @@
         2、点击下载安装包按钮开始下载最新版本APK \n\n
         3、下载完成后点击打开进行安装
     </string>
+    <string name="check_canteen_scan_app_version">检查食堂扫码App版本</string>
 </resources>

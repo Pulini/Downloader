@@ -7,12 +7,23 @@
     android:background="@mipmap/bkg"
     tools:context=".ui.activity.MainActivity">
 
+    <Button
+        android:id="@+id/bt_download2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="download"
+        android:text="@string/download"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline4" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.45" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -33,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.7" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline6"
@@ -55,17 +66,15 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <Button
-        android:id="@+id/bt_CheckVersion"
+        android:id="@+id/bt_CheckGoldEmperor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="checkVersion"
-        android:text="@string/check_version"
+        android:text="@string/check_goldemperor_app_version"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="@+id/bt_scan_code"
-        app:layout_constraintEnd_toStartOf="@+id/bt_scan_code"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bt_scan_code"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <Button
         android:id="@+id/bt_scan_code"
@@ -74,22 +83,20 @@
         android:onClick="scan"
         android:text="@string/scan_code"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <Button
-        android:id="@+id/bt_download"
+        android:id="@+id/bt_CheckCanteenScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="download"
-        android:text="@string/download"
+        android:onClick="getCanteenUrl"
+        android:text="@string/check_canteen_scan_app_version"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="@+id/bt_scan_code"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bt_scan_code"
-        app:layout_constraintTop_toTopOf="@+id/bt_scan_code" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline6"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/iv_logo"

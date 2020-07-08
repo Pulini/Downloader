@@ -1,5 +1,7 @@
 package com.pzx.downloader.http
 
+import com.pzx.downloader.model.CanteenScanVersionModel
+import com.pzx.downloader.model.GoldEmperorVersionModel
 import retrofit2.Call
 import retrofit2.http.GET
 
@@ -12,5 +14,8 @@ import retrofit2.http.GET
  */
 interface API {
     @GET("AndroidUpdate/GoldEmperor/GoldEmperorUpData.xml")
-    fun getApkPath(): Call<VersionModel>
+    fun getGoldEmperorApkPath(): Call<GoldEmperorVersionModel>
+
+    @GET("AndroidUpdate/GoldEmperor/CanteenScanUpData.xml")
+    fun getCanteenScanApkPath(): Call<CanteenScanVersionModel>
 }

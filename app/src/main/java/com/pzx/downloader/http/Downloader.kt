@@ -102,7 +102,7 @@ class Downloader {
         mListener = object :
             OnDownLoadListener {
             override fun onStart(fileName: String) {
-                mDialog!!.setTitle("正在努力下载$fileName")
+                mDialog!!.setTitle("正在下载<$fileName>")
             }
 
             override fun onExists(file: File) {
