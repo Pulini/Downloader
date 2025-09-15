@@ -4,11 +4,11 @@
     <!-- Context.getExternalFilesDir(null) + "/path/" -->
     <external-files-path
         name="external-files-path"
-        path="DownloadApk/"/>
+        path="DownloadFile/"/>
     <!-- Environment.getExternalStorageDirectory() + "/path/" -->
     <external-path
         name="files_root"
-        path="Android/data/com.panzx.downloader/"/>
+        path="Android/data/com.pzx.downloader/"/>
     <!-- path设置为'.'时代表整个存储卡 Environment.getExternalStorageDirectory() + "/path/"   -->
     <external-path
         name="external_storage_root"
